@@ -1796,6 +1796,8 @@ impl Processor {
         owner_account_data_len: usize,
         signers: &[AccountInfo],
     ) -> ProgramResult {
+        msg!("expected owner: {:?}", expected_owner);
+        msg!("owner_account_info: {:?}", owner_account_info);
         if !cmp_pubkeys(expected_owner, owner_account_info.key) {
             return Err(TokenError::OwnerMismatch.into());
         }
