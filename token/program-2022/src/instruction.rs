@@ -22,6 +22,7 @@ use {
         program_option::COption,
         pubkey::{Pubkey, PUBKEY_BYTES},
         system_program, sysvar,
+        msg
     },
     spl_pod::bytemuck::{pod_from_bytes, pod_get_packed_len},
     std::{
@@ -1634,20 +1635,28 @@ pub fn transfer_checked(
     amount: u64,
     decimals: u8,
 ) -> Result<Instruction, ProgramError> {
+    msg!("hello");
+    msg!("world");
     check_spl_token_program_account(token_program_id)?;
     let data = TokenInstruction::TransferChecked { amount, decimals }.pack();
-
+    msg!("0");
     let mut accounts = Vec::with_capacity(4 + signer_pubkeys.len());
+    msg!("1");
     accounts.push(AccountMeta::new(*source_pubkey, false));
+    msg!("2");
     accounts.push(AccountMeta::new_readonly(*mint_pubkey, false));
+    msg!("3");
     accounts.push(AccountMeta::new(*destination_pubkey, false));
+    msg!("4");
     accounts.push(AccountMeta::new_readonly(
         *authority_pubkey,
         signer_pubkeys.is_empty(),
     ));
+    msg!("5");
     for signer_pubkey in signer_pubkeys.iter() {
         accounts.push(AccountMeta::new_readonly(**signer_pubkey, true));
     }
+    msg!("6");
 
     Ok(Instruction {
         program_id: *token_program_id,

@@ -289,6 +289,7 @@ impl Processor {
         expected_decimals: Option<u8>,
         expected_fee: Option<u64>,
     ) -> ProgramResult {
+        msg!("process_transfer");
         let account_info_iter = &mut accounts.iter();
 
         let source_account_info = next_account_info(account_info_iter)?;
@@ -1526,6 +1527,7 @@ impl Processor {
 
     /// Processes an [Instruction](enum.Instruction.html).
     pub fn process(program_id: &Pubkey, accounts: &[AccountInfo], input: &[u8]) -> ProgramResult {
+        msg!("in the processor");
         if let Ok(instruction_type) = decode_instruction_type(input) {
             match instruction_type {
                 PodTokenInstruction::InitializeMint => {
@@ -1624,7 +1626,9 @@ impl Processor {
                 }
                 PodTokenInstruction::TransferChecked => {
                     msg!("Instruction: TransferChecked");
+                    msg!("world");
                     let data = decode_instruction_data::<AmountCheckedData>(input)?;
+                    msg!("wow");
                     Self::process_transfer(
                         program_id,
                         accounts,
@@ -1796,6 +1800,8 @@ impl Processor {
         owner_account_data_len: usize,
         signers: &[AccountInfo],
     ) -> ProgramResult {
+        msg!("expected owner: {:?}", expected_owner);
+        msg!("owner_account_info: {:?}", owner_account_info);
         if !cmp_pubkeys(expected_owner, owner_account_info.key) {
             return Err(TokenError::OwnerMismatch.into());
         }
