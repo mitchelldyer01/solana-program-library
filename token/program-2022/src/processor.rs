@@ -1624,7 +1624,9 @@ impl Processor {
                 }
                 PodTokenInstruction::TransferChecked => {
                     msg!("Instruction: TransferChecked");
+                    msg!("world");
                     let data = decode_instruction_data::<AmountCheckedData>(input)?;
+                    msg!("wow");
                     Self::process_transfer(
                         program_id,
                         accounts,
