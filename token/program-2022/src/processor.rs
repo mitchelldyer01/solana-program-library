@@ -289,6 +289,7 @@ impl Processor {
         expected_decimals: Option<u8>,
         expected_fee: Option<u64>,
     ) -> ProgramResult {
+        msg!("process_transfer);
         let account_info_iter = &mut accounts.iter();
 
         let source_account_info = next_account_info(account_info_iter)?;
